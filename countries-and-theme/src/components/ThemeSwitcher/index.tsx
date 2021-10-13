@@ -25,7 +25,7 @@ const ThemeSwitcher = () => {
       className="font-semibold flex items-center gap-2 cursor-pointer"
       onClick={() => handleSwtichTheme()}
     >
-      <RenderThemeIcon className="text-lg" />
+      <RenderThemeIcon className="text-lg transition" />
       Dark Mode
     </div>
   );
