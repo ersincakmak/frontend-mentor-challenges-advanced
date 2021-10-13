@@ -1,5 +1,5 @@
 import { IoIosArrowDown } from "react-icons/io";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 interface MyOption {
@@ -16,21 +16,7 @@ const options: MyOption[] = [
 ];
 
 const SelectRegion = () => {
-  // Africa, Americas, Asia, Europe, Oceania.
-
   const [dropDownActive, setdropDownActive] = useState(false);
-
-  const myVariants: Variants = {
-    open: {
-      opacity: 1,
-      translateY: "100%",
-    },
-    closed: {
-      opacity: 0,
-      translateY: "85%",
-      visibility: "hidden",
-    },
-  };
 
   const handleDropDownClick = () => {
     setdropDownActive(!dropDownActive);

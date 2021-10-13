@@ -18,10 +18,14 @@ module.exports = {
       boxShadow: {
         component: "0 0 6px 0 rgba(0, 0, 0, 0.18)",
       },
+
+      spacing: {
+        max: "max-content",
+      },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
