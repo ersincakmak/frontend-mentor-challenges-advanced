@@ -1,8 +1,10 @@
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoMdClose } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setSelectedRegion } from "../../redux/countrySlice";
 
-interface MyOption {
+export interface MyOption {
   value: string;
   label: string;
 }
@@ -18,19 +20,41 @@ const options: MyOption[] = [
 const SelectRegion = () => {
   const [dropDownActive, setdropDownActive] = useState(false);
 
+  const { selectedRegion } = useAppSelector((state) => state.country);
+
+  const dispatch = useAppDispatch();
+
   const handleDropDownClick = () => {
     setdropDownActive(!dropDownActive);
   };
 
+  useEffect(() => {
+    return () => {
+      setdropDownActive(false);
+    };
+  }, []);
+
   return (
     <div className="flex h-full w-48 text-sm relative">
       <div
-        className=" w-full h-full flex items-center justify-between p-3 px-5 rounded bg-white
+        className=" w-full h-full flex items-center justify-between p-4 rounded bg-white
        dark:bg-dark-blue transition shadow-component cursor-pointer select-none  z-20"
         onClick={() => handleDropDownClick()}
       >
-        Filter by Region
-        <IoIosArrowDown className="text-lg" />
+        {selectedRegion ? selectedRegion.label : "Filter by Region"}
+
+        <div className="flex gap-2 items-center">
+          {selectedRegion && (
+            <IoMdClose
+              className="text-lg"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(setSelectedRegion(null));
+              }}
+            />
+          )}
+          <IoIosArrowDown className="text-lg" />
+        </div>
       </div>
       <AnimatePresence>
         {dropDownActive && (
@@ -61,6 +85,10 @@ const SelectRegion = () => {
                 value={item.value}
                 key={item.value}
                 className="p-2 hover:underline cursor-pointer"
+                onClick={() => {
+                  dispatch(setSelectedRegion(item));
+                  setdropDownActive(false);
+                }}
               >
                 {item.label}
               </li>

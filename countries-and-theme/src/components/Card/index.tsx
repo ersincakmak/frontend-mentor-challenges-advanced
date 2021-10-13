@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { CountryObject } from "../../types/api";
 
 interface Props {
@@ -6,10 +7,19 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ item }) => {
+  const history = useHistory();
+
+  const handleCardClick = () => {
+    history.push(`/country/${item.ccn3}`);
+  };
+
   return (
-    <div className="flex flex-col rounded w-full h-full overflow-hidden bg-white dark:bg-dark-blue shadow-component transition ">
-      <div className="overflow-hidden aspect-w-16 aspect-h-10 w-full">
-        <img src={item.flags.png} alt="" />
+    <div
+      className="flex flex-col rounded w-full h-max overflow-hidden bg-white dark:bg-dark-blue shadow-component transition cursor-pointer hover:shadow-xl"
+      onClick={() => handleCardClick()}
+    >
+      <div className="overflow-hidden aspect-w-16 aspect-h-11 w-full">
+        <img src={item.flags.png} alt="" className="object-fill" />
       </div>
       <div className="flex flex-col gap-3 p-5 pb-10">
         <span className="font-black">{item.name.common}</span>
